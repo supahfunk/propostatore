@@ -16,7 +16,7 @@ html, body {height:100%;}
 html *,
 html *:before,
 html *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-.zoom {position:fixed; z-index:10; height:100%; background:#efefef; top:0; left:0; width:100%; overflow-y:auto; overflow-x:hidden; display:none;}
+.zoom {position:fixed; z-index:0; height:100%; background:#efefef; top:0; left:0; width:100%; overflow-y:auto; overflow-x:hidden; display:none;}
 .zoom img {position:absolute; left:50%; -moz-transform:translateX(-50%); -ms-transform:translateX(-50%); -o-transform:translateX(-50%); -webkit-transform:translateX(-50%); transform:translateX(-50%);}
 .touch .zoom img {max-width:100%;}
 
@@ -26,8 +26,17 @@ PROPOSTA
 --------------------------------------------------*/
 @width: 120px;
 .thumb div {width:@width; height:@width; overflow:hidden; float:left; position:relative; margin:20px; background:#eee; cursor:pointer; -moz-transition:all .3s ease-in-out; -o-transition:all .3s ease-in-out; -webkit-transition:all .3s ease-in-out; transition:all .3s ease-in-out;}
-.thumb div.active {background-color:aqua; -moz-transform:scale(1.05); -ms-transform:scale(1.05); -o-transform:scale(1.05); -webkit-transform:scale(1.05); transform:scale(1.05);}
-.thumb img {width:@width; height:auto; -webkit-backface-visibility: hidden;}
+.thumb div.active {border-bottom:2px solid #56D7C6;}
+.thumb img {width:100%; height:auto; -webkit-backface-visibility: hidden;}
+
+
+/*--------------------------------------------------
+MINIATURE
+--------------------------------------------------*/
+.miniature {position:fixed; top:0; left:0; width:100%; text-align:center; z-index:10; background:#333;}
+.miniature div {width:30px; height:30px; margin:10px; display:inline-block; overflow:hidden;}
+.miniature div.active {border-bottom:2px solid #56D7C6;}
+.miniature img {width:100%; height:auto;}
 
 
 /*--------------------------------------------------

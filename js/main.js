@@ -2,27 +2,38 @@
 Vars
 --------------------------------------------------*/
 var time = 200;
+var $loading = $('<div class="loading"><div class="shaft1"></div><div class="shaft2"></div><div class="shaft3"></div><div class="shaft4"></div><div class="shaft5"></div><div class="shaft6"></div><div class="shaft7"></div><div class="shaft8"></div><div class="shaft9"></div><div class="shaft10"></div></div>').appendTo($('body'));
+var $zoom = $('<div class="zoom"></div>').appendTo($('body'));
+var $miniature = $('<div class="miniature"></div>').appendTo($('body'));
 
 
 /*--------------------------------------------------
 Create Thumbs
 --------------------------------------------------*/
 function createThumbs() {
-    // create divs
-    $('.thumb img').each(function () {
-        $(this).wrap('<div></div>');
-    });
+    // create divs & miniature
+    $('.thumb').each(function (i) {
+        $div = $('img', this).wrap('<div></div>');
+    })
+    $('.thumb div').clone().appendTo($miniature);
 
     // attach zoom
-    $('.thumb div').on('click touchend',function () {
-        $('.thumb div').removeClass('active');
+    $('.miniature div').on('click touchend', function (i) {
+        $('.miniature div').removeClass('active');
         $(this).addClass('active');
         var src = $('img', this).attr('src');
         openZoom(src);
-    })
+    });
+
+    // thumb zoom
+    $('.thumb div').on('click', function () {
+        $('.thumb div').removeClass('active');
+        i = $('.thumb div').index($(this).addClass('active'));
+        $('div:eq(' + i + ')', $miniature).trigger('click');
+    });
 
     // close zoom
-    $('.zoom').on('dblclick', function () {
+    $zoom.on('dblclick', function () {
         closeZoom();
     });
 
@@ -33,10 +44,10 @@ function createThumbs() {
                 closeZoom();
                 break;
             case 37:
-                $('.thumb div.active').prev().trigger('click');
+                $('.miniature div.active').prev().trigger('click');
                 break;
             case 39:
-                $('.thumb div.active').next().trigger('click');
+                $('.miniature div.active').next().trigger('click');
                 break;
         }
     });
@@ -46,16 +57,17 @@ function createThumbs() {
 Open Zoom
 --------------------------------------------------*/
 function openZoom(src) {
-    $('.zoom img').fadeOut(time);
-    $('.loading, .zoom').fadeIn(time);
+    $('img',$zoom).fadeOut(time);
+    $zoom.fadeIn(time);
+    $loading.fadeIn(time);
 
     var img = new Image();
     setTimeout(function () {
         img.src = src;
         img.onload = function () {
-            $('.loading').stop().hide();
+            $loading.stop().hide();
             $img = $('<img src="' + src + '">').hide();
-            $('.zoom').html($img.fadeIn(time));
+            $zoom.html($img.fadeIn(time));
         }
     }, 1);
 }
@@ -65,7 +77,7 @@ function openZoom(src) {
 Close Zoom
 --------------------------------------------------*/
 function closeZoom() {
-    $('.zoom').fadeOut(time);
+    $zoom.fadeOut(time);
 }
 
 
