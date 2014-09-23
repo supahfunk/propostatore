@@ -91,6 +91,54 @@ function closeZoom() {
 }
 
 
+var Imgs = [];
+var Srcs = [];
+var Ctx = [];
+
+$('.thumb img').each(function (i) {
+    $(this).wrap('<div class="t' + i +'"></div>').remove();
+    Srcs.push($(this).attr('src'));
+    $('.t' + i).html('<canvas id="c' + i + '" width="120" height="120"></canvas>');
+    Ctx[i] = document.getElementById('c' + i).getContext('2d');
+    Imgs[i] = new Image();
+    Imgs[i].src = Srcs[i];
+    Imgs[i].onload = function () {
+        w = this.width;
+        h = this.height;
+        console.log(w);
+        Ctx[i].drawImage(Imgs[i], 0, 0, 120, 120*h/w);
+    }
+});
+
+$('canvas').each(function(i){
+    $(this).click(function () {
+        $zoom.html('<canvas id="z"></canvas>');
+        var z = document.getElementById('z');
+        var ctx = z.getContext('2d');
+        var img = new Image();
+        img.src = Srcs[i];
+        img.onload = function () {
+            W = $(window).width();
+            w = this.width;
+            h = this.height;
+            z.width = W;
+            z.height = W * h / w;
+            $('.zoom').show();
+            console.log(w);
+            ctx.drawImage(img, 0, 0, W, W * h / w);
+        }
+    });
+});
+
+$(document).on('keydown', function (e) {
+    if (e.which == 27) {
+        $zoom.hide().html('');
+    }
+});
+
+console.log(Imgs);
+
+
 /*--------------------------------------------------
 Init
 --------------------------------------------------*/
@@ -99,5 +147,5 @@ $(function () {
     for (i = 1; i <= 10; i++) {
         $('<div class="shaft' + i + '"></div>').appendTo($loading);
     }
-    createThumbs();
+    // createThumbs();
 });
