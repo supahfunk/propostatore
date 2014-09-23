@@ -2,7 +2,7 @@
 Vars
 --------------------------------------------------*/
 var time = 200;
-var $loading = $('<div class="loading"><div class="shaft1"></div><div class="shaft2"></div><div class="shaft3"></div><div class="shaft4"></div><div class="shaft5"></div><div class="shaft6"></div><div class="shaft7"></div><div class="shaft8"></div><div class="shaft9"></div><div class="shaft10"></div></div>').appendTo($('body'));
+var $loading = $('<div class="loading"></div>').appendTo($('body'));
 var $zoom = $('<div class="zoom"></div>').appendTo($('body'));
 var $miniature = $('<div class="miniature"></div>').appendTo($('body'));
 
@@ -32,9 +32,21 @@ function createThumbs() {
         $('div:eq(' + i + ')', $miniature).trigger('click');
     });
 
+    // resize
+    $resize = $('<span class="resize"></span>').appendTo($miniature);
+    $resize.on('click', function () {
+        $('html').toggleClass('resize');
+    });
+
     // close zoom
     $zoom.on('dblclick', function () {
         closeZoom();
+    });
+
+    // scroll zoom
+    $zoom.on('mousewheel', function (e) {
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+        return false;
     });
 
     // keyboard
@@ -62,14 +74,12 @@ function openZoom(src) {
     $loading.fadeIn(time);
 
     var img = new Image();
-    setTimeout(function () {
-        img.src = src;
-        img.onload = function () {
-            $loading.stop().hide();
-            $img = $('<img src="' + src + '">').hide();
-            $zoom.html($img.fadeIn(time));
-        }
-    }, 1);
+    img.src = src;
+    img.onload = function () {
+        $loading.stop().hide();
+        $img = $('<img src="' + src + '">').hide();
+        $zoom.html($img.fadeIn(time));
+    }
 }
 
 
@@ -85,5 +95,9 @@ function closeZoom() {
 Init
 --------------------------------------------------*/
 $(function () {
+    // loading
+    for (i = 1; i <= 10; i++) {
+        $('<div class="shaft' + i + '"></div>').appendTo($loading);
+    }
     createThumbs();
 });

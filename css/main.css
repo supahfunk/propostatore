@@ -1,4 +1,8 @@
-﻿/*--------------------------------------------------
+﻿@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+/*--------------------------------------------------
+FONTS
+--------------------------------------------------*/
+/*--------------------------------------------------
 RESET
 --------------------------------------------------*/
 html,
@@ -138,6 +142,49 @@ html *:after {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding: 20px 0;
+  background: #efefef;
+}
+.wrapper {
+  border-radius: 5px;
+  margin: 0 auto;
+  max-width: 940px;
+  padding: 20px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: #fff;
+}
+h1,
+h2,
+h3 {
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+h2 {
+  font-size: 14px;
+  margin-top: -2px;
+}
+h3 {
+  margin: 20px 0 0;
+  font-size: 13px;
+  padding: 5px;
+  background: #F5F4F2;
+  border-top: 1px dotted #ccc;
+  border-bottom: 1px dotted #ccc;
+}
+/*--------------------------------------------------
+ZOOM
+--------------------------------------------------*/
 .zoom {
   position: fixed;
   z-index: 0;
@@ -162,6 +209,9 @@ html *:after {
 .touch .zoom img {
   max-width: 100%;
 }
+.resize .zoom img {
+  max-width: 100%;
+}
 /*--------------------------------------------------
 PROPOSTA
 --------------------------------------------------*/
@@ -169,7 +219,7 @@ PROPOSTA
   width: 120px;
   height: 120px;
   overflow: hidden;
-  float: left;
+  display: inline-block;
   position: relative;
   margin: 20px;
   background: #eee;
@@ -187,6 +237,10 @@ PROPOSTA
   height: auto;
   -webkit-backface-visibility: hidden;
 }
+.title {
+  background: url(../img/logo_ws.png) no-repeat 0 1px;
+  padding: 6px 0 13px 60px;
+}
 /*--------------------------------------------------
 MINIATURE
 --------------------------------------------------*/
@@ -197,7 +251,16 @@ MINIATURE
   width: 100%;
   text-align: center;
   z-index: 10;
-  background: #333;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  padding: 0 30px;
+}
+.miniature:hover {
+  opacity: 1;
 }
 .miniature div {
   width: 30px;
@@ -205,6 +268,7 @@ MINIATURE
   margin: 10px;
   display: inline-block;
   overflow: hidden;
+  cursor: pointer;
 }
 .miniature div.active {
   border-bottom: 2px solid #56D7C6;
@@ -212,6 +276,16 @@ MINIATURE
 .miniature img {
   width: 100%;
   height: auto;
+}
+.miniature .resize {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+  height: 20px;
+  width: 20px;
+  z-index: 10;
+  cursor: pointer;
+  background: url(../img/resize.png) no-repeat center;
 }
 /*--------------------------------------------------
 LOADING
